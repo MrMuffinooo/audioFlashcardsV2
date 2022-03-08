@@ -8,6 +8,8 @@ import ListenScreen from './src/scenes/listen';
 import PlayScreen from './src/scenes/play';
 import SettingsScreen from './src/scenes/settings';
 import {SettingsButton} from './src/components/SettingsButton';
+import AddScreen from './src/scenes/add';
+import {COLOR_PRIMARY, COLOR_PRIMARY_TEXT} from './src/styles/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +17,14 @@ function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: COLOR_PRIMARY,
+            },
+            headerTintColor: COLOR_PRIMARY_TEXT,
+          }}>
           <Stack.Screen
             name="Home"
             component={HomeScreen}
@@ -28,6 +37,7 @@ function App() {
           <Stack.Screen name="Play" component={PlayScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Edit" component={EditScreen} />
+          <Stack.Screen name="Add" component={AddScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

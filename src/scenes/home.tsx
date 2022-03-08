@@ -1,25 +1,31 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Button} from '../components/Button';
+import {View, StyleSheet} from 'react-native';
+import {FAB} from 'react-native-paper';
+import {MyButton} from '../components/MyButton';
+import {COLOR_PRIMARY} from '../styles/colors';
 
 function HomeScreen({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
+      <MyButton
         text="Play"
-        style={styles.button}
+        styleButton={styles.button}
         onPress={() => navigation.navigate('Play')}
       />
-      <Button
+      <MyButton
         text="Listen"
-        style={styles.button}
+        styleButton={styles.button}
         onPress={() => navigation.navigate('Listen')}
       />
-      <Button
+      <MyButton
         text="Edit"
-        style={styles.buttonEdit}
+        styleButton={styles.buttonEdit}
         onPress={() => navigation.navigate('Edit')}
+      />
+      <FAB
+        style={styles.fab}
+        icon={require('../assets/icons/add_24.png')}
+        onPress={() => navigation.navigate('Add')}
       />
     </View>
   );
@@ -31,6 +37,13 @@ const styles = StyleSheet.create({
   },
   buttonEdit: {
     marginTop: 50,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 32,
+    right: 0,
+    bottom: 0,
+    backgroundColor: COLOR_PRIMARY,
   },
 });
 

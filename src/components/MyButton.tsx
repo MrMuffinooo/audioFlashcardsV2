@@ -4,14 +4,15 @@ import {COLOR_SECONDARY, COLOR_SECONDARY_TEXT} from '../styles/colors';
 
 interface props {
   text: string;
-  onPress: (e: any) => void;
-  style?: any;
+  onPress?: (e: any) => void;
+  styleButton?: object;
+  styleText?: object;
 }
 
-export function Button({text, onPress, style}: props) {
+export function MyButton({text, onPress, styleButton, styleText}: props) {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={styles.text}>{text}</Text>
+    <TouchableOpacity style={[styles.button, styleButton]} onPress={onPress}>
+      <Text style={[styles.text, styleText]}>{text}</Text>
     </TouchableOpacity>
   );
 }
