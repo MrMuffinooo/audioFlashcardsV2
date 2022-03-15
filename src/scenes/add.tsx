@@ -22,7 +22,7 @@ function AddScreen() {
       />
       <View style={styles.spacer} />
       <IconButton
-        icon={require('../assets/icons/done_24.png')}
+        icon={require('../assets/icons/done_36.png')}
         size={36}
         color={COLOR_SECONDARY_TEXT}
         onPress={() => console.log('Pressed')}
