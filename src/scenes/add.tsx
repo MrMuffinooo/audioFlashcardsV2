@@ -3,10 +3,39 @@ import {View, StyleSheet} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {MyTextInput} from '../components/MyTextInput';
 import {COLOR_SECONDARY, COLOR_SECONDARY_TEXT} from '../styles/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRef} from 'react';
+
+interface flashcard {
+  native: string;
+  translation: string;
+  lastSeen: number;
+}
 
 function AddScreen() {
   const [textNative, setTextNative] = React.useState('');
   const [textTranslation, setTextTranslation] = React.useState('');
+  const inputsRef = useRef(null);
+
+  const storeData = async (value: flashcard) => {
+    const jsonValue = JSON.stringify(value);
+    try {
+      await AsyncStorage.setItem(String(Date.now()), jsonValue);
+    } catch (e) {
+      console.error('Error while saving data');
+    }
+  };
+
+  const onClick = () => {
+    const obj = {
+      native: textNative,
+      translation: textTranslation,
+      lastSeen: Date.now(),
+    };
+    storeData(obj);
+    setTextNative('');
+    setTextTranslation('');
+  };
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -22,10 +51,11 @@ function AddScreen() {
       />
       <View style={styles.spacer} />
       <IconButton
+        disabled={textNative == '' || textTranslation == ''}
         icon={require('../assets/icons/done_36.png')}
         size={36}
         color={COLOR_SECONDARY_TEXT}
-        onPress={() => console.log('Pressed')}
+        onPress={onClick}
         style={styles.button}
       />
     </View>
