@@ -20,7 +20,7 @@ function HomeScreen({navigation}) {
       <MyButton
         text="Edit"
         styleButton={styles.buttonEdit}
-        onPress={() => navigation.navigate('Edit')}
+        onPress={() => navigation.navigate('Browse')}
       />
       <FAB
         style={styles.fab}

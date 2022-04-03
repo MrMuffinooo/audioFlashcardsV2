@@ -4,6 +4,7 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/scenes/home';
 import EditScreen from './src/scenes/edit';
+import BrowseScreen from './src/scenes/browse';
 import ListenScreen from './src/scenes/listen';
 import PlayScreen from './src/scenes/play';
 import SettingsScreen from './src/scenes/settings';
@@ -38,6 +39,7 @@ function App() {
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Edit" component={EditScreen} />
           <Stack.Screen name="Add" component={AddScreen} />
+          <Stack.Screen name="Browse" component={BrowseScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

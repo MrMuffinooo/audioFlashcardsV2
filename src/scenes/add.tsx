@@ -3,28 +3,11 @@ import {View, StyleSheet} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {MyTextInput} from '../components/MyTextInput';
 import {COLOR_SECONDARY, COLOR_SECONDARY_TEXT} from '../styles/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRef} from 'react';
-
-interface flashcard {
-  native: string;
-  translation: string;
-  lastSeen: number;
-}
+import {storeData} from '../utils/storage';
 
 function AddScreen() {
   const [textNative, setTextNative] = React.useState('');
   const [textTranslation, setTextTranslation] = React.useState('');
-  const inputsRef = useRef(null);
-
-  const storeData = async (value: flashcard) => {
-    const jsonValue = JSON.stringify(value);
-    try {
-      await AsyncStorage.setItem(String(Date.now()), jsonValue);
-    } catch (e) {
-      console.error('Error while saving data');
-    }
-  };
 
   const onClick = () => {
     const obj = {
