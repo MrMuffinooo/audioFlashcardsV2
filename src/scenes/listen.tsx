@@ -2,10 +2,84 @@ import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {Bar} from 'react-native-progress';
-import {COLOR_PRIMARY, COLOR_SECONDARY_TEXT} from '../styles/colors';
+import {COLOR_PRIMARY, COLOR_SECONDARY} from '../styles/colors';
+import notifee, {
+  AndroidImportance,
+  AndroidVisibility,
+} from '@notifee/react-native';
+import {useEffect} from 'react';
+import {NOTIFICATION_ID} from '../utils/constans';
 
 function ListenScreen() {
   const [progress, setProgress] = React.useState(0.4);
+
+  useEffect(() => {
+    async function onDisplayNotification() {
+      // Request permissions (required for iOS)
+      await notifee.requestPermission();
+
+      // Create a channel (required for Android)
+      const channelId = await notifee.createChannel({
+        id: 'ttsfc',
+        name: 'Text to Speech Flashcards',
+        importance: AndroidImportance.LOW,
+        visibility: AndroidVisibility.PUBLIC,
+        vibration: false,
+        lights: false,
+      });
+
+      // Display a notification
+      await notifee.displayNotification({
+        id: NOTIFICATION_ID,
+        title: 'Audio Flashcards',
+        android: {
+          channelId,
+          ongoing: true,
+          autoCancel: false,
+          asForegroundService: true,
+          importance: AndroidImportance.LOW,
+          visibility: AndroidVisibility.PUBLIC,
+          color: `${COLOR_SECONDARY}`,
+          colorized: true,
+          //smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+          // pressAction is needed if you want the notification to open the app when pressed
+          pressAction: {
+            id: 'default',
+          },
+          actions: [
+            {
+              title: '&#x23f8; <b>Pause</b>',
+              pressAction: {
+                id: 'pause',
+              },
+            },
+            {
+              title: '&#x1f500; <b>Shuffle</b>',
+              pressAction: {
+                id: 'shuffle',
+              },
+            },
+            {
+              title: '&#x274c; <b>Exit</b>',
+              pressAction: {
+                id: 'exit',
+              },
+            },
+          ],
+        },
+      });
+    }
+
+    async function cancelNotification() {
+      await notifee.cancelNotification('Audio Flashcards Notif');
+    }
+
+    onDisplayNotification().catch(console.error);
+
+    return () => {
+      notifee.stopForegroundService();
+    };
+  }, []);
 
   return (
     <View style={{flex: 1}}>
